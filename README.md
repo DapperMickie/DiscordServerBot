@@ -13,6 +13,7 @@ For this project you will need to install node.js and a few additional libraries
 ```
 To install node.js: npm init
 To install discord.js: npm install discord.js
+To install superagent: npm install superagent
 ```
 
 ### Installing

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DapperDino/DiscordServerBot#readme",
   "dependencies": {
-    "discord.js": "^11.3.2"
+    "discord.js": "^11.3.2",
+    "superagent": "^3.8.3"
   }
 }

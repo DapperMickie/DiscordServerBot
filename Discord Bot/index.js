@@ -45,7 +45,7 @@ bot.on("ready", () => {
     console.log("Ready to go!");
 });
 
-bot.on("guildMemberAdd", function(member){ //Welcoming the user to the server, sending them a PM with rules and such, then giving them the member role
+bot.on("guildMemberAdd", async member =>{ //Welcoming the user to the server, sending them a PM with rules and such, then giving them the member role
     welcomeChannel.send(member + " welcome to the server :D I've just send you a PM with some details about the server, it would mean a lot if you were to give them a quick read.");
     welcomeChannel.send("Your friend, DapperBot.");
     member.send("Hello " + member.displayName + ". Thanks for joining the server. Here are the server rules:");
@@ -62,6 +62,10 @@ bot.on("guildMemberAdd", function(member){ //Welcoming the user to the server, s
     member.send("If you are happy with these rules then feel free to use the server as much as you like. The more members the merrier :D");
     member.send("(I am currently being tested on by my creator so if someone goes wrong with me, don't panic, i'll be fixed. That's it from me. I'll see you around :)");
     member.addRole(member.guild.roles.find("name", "Member"));
+});
+
+bot.on("guildMemberRemove", async member =>{
+    welcomeChannel.send(member + ", it's a shame you had to leave us. We'll miss you :("); //Sends a message when a user leaves the server
 });
 
 bot.on("message", async(message) => {
