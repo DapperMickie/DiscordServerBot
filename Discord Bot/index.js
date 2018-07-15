@@ -5,6 +5,8 @@ const bot = new Discord.Client({
     commandPrefix: config.prefix //Change bot prefix from default to our chosen prefix
 });
 
+let coins = require("./coins.json");
+
 bot.commands = new Discord.Collection(); //Creates new collection to store our commands
 
 fs.readdir("./commands/",(err,files) =>{
@@ -60,6 +62,7 @@ bot.on("guildMemberAdd", async member =>{ //Welcoming the user to the server, se
         .setFooter("If these rules are broken then don't be surprised by a ban")
     member.send(embed);
     member.send("If you are happy with these rules then feel free to use the server as much as you like. The more members the merrier :D");
+    member.send("Use the command '?commands' to recieve a PM with all my commands and how to use them");
     member.send("(I am currently being tested on by my creator so if someone goes wrong with me, don't panic, i'll be fixed. That's it from me. I'll see you around :)");
     member.addRole(member.guild.roles.find("name", "Member"));
 });
@@ -73,14 +76,34 @@ bot.on("message", async(message) => {
     {
         return;
     }
-    if(message.content.indexOf(config.prefix) != 0) //Makes sure we are using the prefix
-    {
-        return;
-    }
     if(message.channel != botChannel) //Makes sure we are in the correct channel
     {
         return;
     }
+    if(!coins[message.author.id]) //Makes sure the user is part of the coins.json file
+    {
+        coins[message.author.id] = { //If they aren't then we'll create them a new object with a 'coins' property that starts at 0
+            coins: 0
+        };
+    }
+    let coinAmt = Math.floor(Math.random() * 15) + 1; // Picks a coin value between 1 and 15
+    let chance = Math.floor(Math.random() * 10) + 1; // Has a 10% chance to give coins
+    if(chance == 5) // This number doesn't matter so long as it's between 1 and 10
+    {
+        coins[message.author.id] = {
+            coins: coins[message.author.id].coins + coinAmt // Adds our coin value to our current coin balance
+        };
+        fs.writeFile("./coins.json", JSON.stringify(coins), (err) =>{
+            if(err)
+            {
+                console.log(err);
+            }
+        });
+    }
+    if(message.content.indexOf(config.prefix) != 0) //Makes sure we are using the prefix
+    {
+        return;
+    } 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g); //Reduces our message string down into a list of each separate word
     const command = args.shift().toLowerCase(); //Takes our actual command word and makes it lowercase to compare later to our commands (not case sensitive)
     console.log(args);
