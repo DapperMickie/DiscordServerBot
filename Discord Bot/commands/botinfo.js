@@ -7,7 +7,9 @@ module.exports.run = async(bot,message,args) =>{
         .setThumbnail(bot.user.displayAvatarURL)
         .addField("My name is DapperBot", "My goal in life is to make your life easier, and more fun :D")
         .addField("I was born on:", bot.user.createdAt)
-    message.channel.send(embed);    
+    message.channel.send(embed)
+        .then(console.log)
+        .catch(console.error); 
 }
 
 module.exports.help = {

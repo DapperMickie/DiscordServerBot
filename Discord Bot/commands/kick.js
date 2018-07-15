@@ -27,9 +27,15 @@ module.exports.run = async(bot,message,args) =>{
         .addField("Kicked at:", message.createdAt)
         .addField("Reason for kick:", reason)
     
-    message.delete(); //Removes the command message
-    kicksAndBansChannel.send(embed); //Sends the official kick report to the kicks and bans channel to be logged for reference
-    message.guild.member(kickedUser).kick(reason); //Actually kick the user from the server
+    message.delete() //Removes the command message
+        .then(console.log)
+        .catch(console.error); 
+    kicksAndBansChannel.send(embed) //Sends the official kick report to the kicks and bans channel to be logged for reference
+        .then(console.log)
+        .catch(console.error); 
+    message.guild.member(kickedUser).kick(reason) //Actually kick the user from the server
+        .then(console.log)
+        .catch(console.error);
 }
 
 module.exports.help = {

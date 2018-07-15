@@ -11,7 +11,9 @@ module.exports.run = async(bot,message,args) =>{
         .setDescription("You really deserved this :)")
         .setImage(body.url) //Since the URL of the body is going to be an image from a json file it will actually show a picture inside the embed
 
-    message.channel.send(embed);
+    message.channel.send(embed)
+        .then(console.log)
+        .catch(console.error);
 }
 
 module.exports.help = {

@@ -9,7 +9,9 @@ module.exports.run = async(bot,message,args) =>{
         .addField("Was created on:", message.guild.createdAt)
         .addField("You joined us on:", message.member.joinedAt)
         .addField("Our member count is currently at:", message.guild.memberCount)
-    message.channel.send(embed);
+    message.channel.send(embed)
+        .then(console.log)
+        .catch(console.error);
 }
 
 module.exports.help = {

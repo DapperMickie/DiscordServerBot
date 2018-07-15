@@ -14,7 +14,9 @@ module.exports.run = async(bot,message,args) =>{
         .addField("?ping","Plays ping-pong with the bot excpet the only difference is that he then feels the need to tell you the speed of the hit afterwards. Oh well.")
         .addField("?report '@user' 'reason'","Reports the mentioned user so that the admins can decide their fate. Do not abuse this command.")
         .addField("?serverinfo","Useless information about the server that you probably don't care about. But hey. It's here if you want to know. Just in case")
-    message.author.send(embed); 
+    message.author.send(embed)
+        .then(console.log)
+        .catch(console.error);
 }
 
 module.exports.help = {

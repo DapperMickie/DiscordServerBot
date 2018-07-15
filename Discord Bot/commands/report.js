@@ -17,8 +17,12 @@ module.exports.run = async(bot,message,args) =>{
         .addField("Reported at:", message.createdAt)
         .addField("Reason for report:", reason)
         
-    message.delete(); //Removes the command message
-    reportsChannel.send(embed); //Sends the official report embed to the reports channel to be reviewed
+    message.delete() //Removes the command message
+        .then(console.log)
+        .catch(console.error);
+    reportsChannel.send(embed) //Sends the official report embed to the reports channel to be reviewed
+        .then(console.log)
+        .catch(console.error);
 }
 
 module.exports.help = {
