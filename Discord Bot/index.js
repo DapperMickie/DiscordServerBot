@@ -6,7 +6,6 @@ const bot = new Discord.Client({
 });
 
 let coins = require("./coins.json");
-let xp = require("./xp.json");
 
 bot.commands = new Discord.Collection(); //Creates new collection to store our commands
 
@@ -77,6 +76,10 @@ bot.on("message", async(message) => {
     {
         return;
     }
+    if(message.channel != botChannel) //Makes sure we are in the correct channel
+    {
+        return;
+    }
     if(!coins[message.author.id]) //Makes sure the user is part of the coins.json file
     {
         coins[message.author.id] = { //If they aren't then we'll create them a new object with a 'coins' property that starts at 0
@@ -97,37 +100,6 @@ bot.on("message", async(message) => {
             }
         });
     }
-    let xpAmt = Math.floor(Math.random() * 10) + 5;
-    if(!xp[message.author.id])
-    {
-        xp[message.author.id] = {
-            xp: 0,
-            level: 1
-        };
-    }
-
-    let curxp = xp[message.author.id].xp;
-    let curlvl = xp[message.author.id].level;
-    let nxtLvl = (xp[message.author.id].level * 200) * 1.2;
-    xp[message.author.id].xp = curxp + xpAmt;
-    if(nxtLvl <= xp[message.author.id].xp)
-    {
-        xp[message.author.id].level = curlvl + 1;
-        let embed = new Discord.RichEmbed()
-            .setTitle("Level Up!")
-            .setColor("ff00ff")
-            .addField("Congratulations", message.author)
-            .addField("New Level:", curlvl + 1)
-        message.channel.send(embed).then(msg =>{
-            msg.delete(5000);
-        });
-    }
-    fs.writeFile("./xp.json", JSON.stringify(xp), (err) =>{
-        if(err)
-        {
-            console.log(err);
-        }
-    });
     if(message.content.indexOf(config.prefix) != 0) //Makes sure we are using the prefix
     {
         return;
