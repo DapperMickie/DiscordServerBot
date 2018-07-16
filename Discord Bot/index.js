@@ -106,13 +106,13 @@ bot.on("message", async(message) => {
         };
     }
 
-    let curxp = xp[message.author.id].xp;
-    let curlvl = xp[message.author.id].level;
-    let nxtLvl = (xp[message.author.id].level * 200) * 1.2;
-    xp[message.author.id].xp = curxp + xpAmt;
-    if(nxtLvl <= xp[message.author.id].xp)
+    let curxp = xp[message.author.id].xp; // Users current xp
+    let curlvl = xp[message.author.id].level; // Users current level
+    let nxtLvl = (xp[message.author.id].level * 200) * 1.2; // User's required xp for level up
+    xp[message.author.id].xp = curxp + xpAmt; // Increase the user's xp
+    if(nxtLvl <= xp[message.author.id].xp) // Check for level up
     {
-        xp[message.author.id].level = curlvl + 1;
+        xp[message.author.id].level = curlvl + 1; // Incriment level
         let embed = new Discord.RichEmbed()
             .setTitle("Level Up!")
             .setColor("ff00ff")
