@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const coins = require("../coins.json");
 
 module.exports.run = async(bot,message,args) =>{
     let userCurrency = coins[message.author.id].coins;
