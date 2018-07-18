@@ -10,6 +10,8 @@ module.exports.run = async(bot,message,args) =>{
     message.channel.send(embed)
         .then(console.log)
         .catch(console.error); 
+
+        message.author
 }
 
 module.exports.help = {
