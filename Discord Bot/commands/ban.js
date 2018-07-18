@@ -30,6 +30,7 @@ module.exports.run = async(bot,message,args) =>{
     message.delete() //Removes the command message
         .then(console.log)
         .catch(console.error);
+    
     kicksAndBansChannel.send(embed) //Sends the official ban report to the kicks and bans channel to be logged for reference
         .then(console.log)
         .catch(console.error);

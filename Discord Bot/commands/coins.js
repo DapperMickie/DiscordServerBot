@@ -1,14 +1,14 @@
 const Discord = require("discord.js");
-const coins = require("../coins.json");
+const c = require("../coins.json");
 
 module.exports.run = async(bot,message,args) =>{
-    if(!coins[message.author.id])
+    if(!c[message.author.id])
     {
-        coins[message.author.id] = {
+        c[message.author.id] = {
             coins: 0
         };
     }
-    let userCoins = coins[message.author.id].coins;
+    let userCoins = c[message.author.id].coins;
 
     let embed = new Discord.RichEmbed()
         .setAuthor(message.author.username)
