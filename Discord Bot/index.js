@@ -84,19 +84,19 @@ bot.on("message", async(message) => {
         };
     }
     let coinAmt = Math.floor(Math.random() * 15) + 1; // Picks a coin value between 1 and 15
-    let chance = Math.floor(Math.random() * 10) + 1; // Has a 10% chance to give coins
-    if(chance == 5) // This number doesn't matter so long as it's between 1 and 10
+    let chance = Math.floor(Math.random() * 3) + 1; // Has a 33.3% chance to give coins
+    if(chance == 2) // This number doesn't matter so long as it's between 1 and 3
     {
         coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmt // Adds our coin value to our current coin balance
         };
-        fs.writeFile("./coins.json", JSON.stringify(coins), (err) =>{
-            if(err)
-            {
-                console.log(err);
-            }
-        });
     }
+    fs.writeFile("./coins.json", JSON.stringify(coins), (err) =>{
+        if(err)
+        {
+            console.log(err);
+        }
+    });
     let xpAmt = Math.floor(Math.random() * 10) + 5;
     if(!xp[message.author.id])
     {
