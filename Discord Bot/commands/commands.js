@@ -1,3 +1,5 @@
+"use strict";
+
 const Discord = require("discord.js");
 
 module.exports.run = async(bot,message,args) =>{
@@ -11,7 +13,9 @@ module.exports.run = async(bot,message,args) =>{
         .addField("?coins","With this you can view your current coin balance.")
         .addField("?commands","That's how you got here.")
         .addField("?doggo","(Price: 50 coins) Dapper Bot will send a random Doggo picture to the channel because you've been such a good boy just like you Doggo you're about to recieve :D.")
+        .addField("?gif gifkeywords", "Sends a gif of whatever you searched for")
         .addField("?kick '@user'","Kicks the mentioned user. (Admin Only).")
+        .addField("?level","Displays your level in the server and how much exp is required for a level up.")
         .addField("?mirror","(Price: 50 coins) Dapper Bot will try and make you feel better about yourself, he's a good friend.")
         .addField("?ping","Plays ping-pong with the bot excpet the only difference is that he then feels the need to tell you the speed of the hit afterwards. Oh well.")
         .addField("?report '@user' 'reason'","Reports the mentioned user so that the admins can decide their fate. Do not abuse this command.")

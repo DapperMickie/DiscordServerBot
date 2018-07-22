@@ -1,5 +1,8 @@
+"use strict";
+
 const Discord = require("discord.js");
 const coins = require("../coins.json");
+const fs = require("fs");
 
 module.exports.run = async(bot,message,args) =>{
     let userCurrency = coins[message.author.id].coins;
@@ -13,7 +16,7 @@ module.exports.run = async(bot,message,args) =>{
         m.react('😍')
             .then(console.log)
             .catch(console.error)
-        fs.writeFile("./coins.json", JSON.stringify(coins), (err) =>{
+        fs.writeFile("../coins.json", JSON.stringify(coins), (err) =>{
             if(err)
             {
                 console.log(err)

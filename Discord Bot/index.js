@@ -1,3 +1,5 @@
+"use strict";
+
 const Discord = require("discord.js"); //Importing the discord.js library to let us do all this wonderful stuff
 const config = require("./config.json"); //Importing our .json file with out personal variables such as bot token and channel ID's
 const fs = require("fs"); //Importing the fs library to let us use the file system
@@ -84,8 +86,8 @@ bot.on("message", async(message) => {
         };
     }
     let coinAmt = Math.floor(Math.random() * 15) + 1; // Picks a coin value between 1 and 15
-    let chance = Math.floor(Math.random() * 3) + 1; // Has a 33.3% chance to give coins
-    if(chance == 2) // This number doesn't matter so long as it's between 1 and 3
+    let chance = Math.floor(Math.random() * 2) + 1; // Has a 50% chance to give coins
+    if(chance == 1) // This number doesn't matter so long as it's between 1 and 2
     {
         coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmt // Adds our coin value to our current coin balance

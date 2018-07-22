@@ -1,3 +1,5 @@
+"use strict";
+
 const Discord = require("discord.js");
 const xp = require("../xp.json");
 

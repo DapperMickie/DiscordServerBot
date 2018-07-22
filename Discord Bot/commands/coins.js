@@ -1,3 +1,5 @@
+"use strict";
+
 const Discord = require("discord.js");
 const c = require("../coins.json");
 

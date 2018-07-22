@@ -1,3 +1,5 @@
+"use strict";
+
 const Discord = require("discord.js");
 const SuperAgent = require("superagent");
 const SuperAgent2 = require("superagent");
@@ -33,7 +35,7 @@ module.exports.run = async(bot,message,args) =>{
             .then(console.log)
             .catch(console.error);
             
-        fs.writeFile("./coins.json", JSON.stringify(coins), (err) =>{
+        fs.writeFile("../coins.json", JSON.stringify(coins), (err) =>{
             if(err)
             {
                 console.log(err)
