@@ -1,0 +1,32 @@
+{
+    "name": "discordbot-ts",
+    "version": "1.0.5",
+    "description": "Simple discord bot",
+    "main": "dist/index.js",
+    "scripts": {
+        "watch": "node_modules/.bin/tsc -w",
+        "build": "node_modules/.bin/tsc",
+        "start": "node dist/index.js"
+    },
+    "keywords": [],
+    "author": "Nathan Farrer <email@email.com> (https://github.com/DapperDino) & Mick Rustenhoven <rustenhovenmick@outlook.com> (https://github.com/Mickie456)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DapperDino/DiscordServerBot.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@types/cheerio": "^0.22.6",
+        "@types/node": "^8.5.2",
+        "@types/node-fetch": "^1.6.7",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.2"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.2",
+        "discord.js": "^11.2.1",
+        "gulp": "^3.9.1",
+        "gulp-ts": "^0.3.0",
+        "node-fetch": "^1.7.3"
+    }
+}
