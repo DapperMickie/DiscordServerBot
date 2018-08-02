@@ -25,6 +25,8 @@
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
         "discord.js": "^11.2.1",
+        "gulp": "^3.9.1",
+        "gulp-ts": "^0.3.0",
         "node-fetch": "^1.7.3"
     }
 }
