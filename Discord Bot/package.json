@@ -1,5 +1,5 @@
 {
-    "name": "discordbot-ts",
+    "name": "dapperdino-bot",
     "version": "1.0.5",
     "description": "Simple discord bot",
     "main": "dist/index.js",
