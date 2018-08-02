@@ -9,10 +9,10 @@
         "start": "node dist/index.js"
     },
     "keywords": [],
-    "author": "Leopotam <leopotam@gmail.com> (https://github.com/Leopotam)",
+    "author": "Nathan Farrer <email@email.com> (https://github.com/DapperDino) & Mick Rustenhoven <rustenhovenmick@outlook.com> (https://github.com/Mickie456)",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Leopotam/discord-bot.git"
+        "url": "https://github.com/DapperDino/DiscordServerBot.git"
     },
     "license": "MIT",
     "devDependencies": {
