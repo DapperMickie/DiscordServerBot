@@ -14,6 +14,7 @@ export default class HelpCommand implements IBotCommand {
     public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
+    
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message): Promise<void> {
         answer.setTextOnly(`Testing.`)
     }

@@ -2,9 +2,12 @@
     "game": "",
     "commands": [
         "help",
+        "mirror",
+        "ping",
         "serverinfo"
     ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside",
+    "welcomeChannel": "create bot.prod.json at same folder and put your welcome channel's id inside",
     "idiots": [],
     "idiotAnswer": "",
     "name":"DapperBot"

@@ -13,11 +13,11 @@ export class Bot implements IBot {
 
     public get onlineUsers() { return this.allUsers.filter((i) => i.presence.status !== 'offline') }
 
-    private readonly _commands: IBotCommand[] = []
+    private readonly _commands: IBotCommand[] = [];
     private _client!: discord.Client;
     private _config!: IBotConfig;
-    private _logger!: ILogger
-    private _botId!: string
+    private _logger!: ILogger;
+    private _botId!: string;
 
     public start(logger: ILogger, config: IBotConfig, commandsPath: string, dataPath: string) {
         this._logger = logger
@@ -41,6 +41,12 @@ export class Bot implements IBot {
             this._logger.info('started...')
         })
 
+        this._client.on('guildMemberAdd', async member => {
+            let welcomeChannel = this._client.channels.get(this._config.welcomeChannel) as any;
+            welcomeChannel.send(member + " welcome to the server :D");
+            member.addRole(member.guild.roles.find("name", "Member"));
+        })
+
         this._client.on('message', async (message) => {
             if (message.author.id !== this._botId) {
                 const text = message.cleanContent;
@@ -59,6 +65,8 @@ export class Bot implements IBot {
                             }
                             if (answer.isValid()) {
                                 message.channel.send(answer.text || { embed: answer.richText })
+                                    .then(console.log)
+                                    .catch(console.error);
                             }
                             break
                         }
@@ -70,7 +78,6 @@ export class Bot implements IBot {
             }
         })
 
-        console.log(this._config.token);
         this._client.login(this._config.token)
     }
 

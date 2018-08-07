@@ -14,6 +14,7 @@ export interface ILogger {
 
 export interface IBotConfig {
     token: string
+    welcomeChannel: string
     commands: string[]
     game?: string
     username?: string
