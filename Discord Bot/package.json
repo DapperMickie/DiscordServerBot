@@ -2,7 +2,7 @@
     "name": "discordbot-ts",
     "version": "1.0.5",
     "description": "Simple discord bot",
-    "main": "dist/index.js",
+    "main": "src/index.js",
     "scripts": {
         "watch": "node_modules/.bin/tsc -w",
         "build": "node_modules/.bin/tsc",
@@ -17,16 +17,18 @@
     "license": "MIT",
     "devDependencies": {
         "@types/cheerio": "^0.22.6",
-        "@types/node": "^8.5.2",
+        "@types/node": "^8.10.24",
         "@types/node-fetch": "^1.6.7",
         "tslint": "^5.8.0",
         "typescript": "^2.6.2"
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
-        "discord.js": "^11.2.1",
+        "discord.js": "^11.3.2",
         "gulp": "^3.9.1",
         "gulp-ts": "^0.3.0",
-        "node-fetch": "^1.7.3"
+        "node": "^10.8.0",
+        "node-fetch": "^1.7.3",
+        "path": "^0.12.7"
     }
 }

@@ -51,14 +51,14 @@ export class Bot implements IBot {
                         if (cmd.isValid(text)) {
                             const answer = new BotMessage(message.author);
                             if (!this._config.idiots || !this._config.idiots.includes(message.author.id)) {
-                                await cmd.process(text, answer)
+                                await cmd.process(text, answer, message)
                             } else {
                                 if (this._config.idiotAnswer) {
                                     answer.setTextOnly(this._config.idiotAnswer)
                                 }
                             }
                             if (answer.isValid()) {
-                                message.reply(answer.text || { embed: answer.richText })
+                                message.channel.send(answer.text || { embed: answer.richText })
                             }
                             break
                         }
@@ -70,6 +70,7 @@ export class Bot implements IBot {
             }
         })
 
+        console.log(this._config.token);
         this._client.login(this._config.token)
     }
 
