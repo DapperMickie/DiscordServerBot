@@ -1,7 +1,10 @@
 {
     "game": "",
     "commands": [
+        "botinfo",
+        "doggo",
         "help",
+        "level",
         "mirror",
         "ping",
         "serverinfo"

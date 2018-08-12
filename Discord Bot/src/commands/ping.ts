@@ -15,9 +15,9 @@ export default class ServerInfoCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
 
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void> {
         let m = await msgObj.channel.send("Ping?") as any; //Sends a temporary message
-        m.edit(`Pong! Latency is ${m.createdTimestamp - msgObj.createdTimestamp}ms.`) //Once the message has been sent and recieved it then calcualtes lantency and edits the previous message to inform the user
+        m.edit(`Pong! Latency is ${m.createdTimestamp - msgObj.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`) //Once the message has been sent and recieved it then calcualtes lantency and edits the previous message to inform the user
             .then(console.log)
             .catch(console.error);
     }

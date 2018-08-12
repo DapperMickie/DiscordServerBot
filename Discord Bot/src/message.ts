@@ -20,8 +20,8 @@ export class BotMessage implements IBotMessage {
         return this
     }
 
-    public addField(name: string, value: string): IBotMessage {
-        this.validateRichText().addField(name, value)
+    public addField(name: string, value: string, inline: boolean): IBotMessage {
+        this.validateRichText().addField(name, value, inline)
         return this
     }
 

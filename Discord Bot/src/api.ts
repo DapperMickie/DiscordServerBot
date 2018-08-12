@@ -39,7 +39,7 @@ export interface IBotCommand {
     getHelp(): IBotCommandHelp
     init(bot: IBot, dataPath: string): void
     isValid(msg: string): boolean
-    process(msg: string, answer: IBotMessage, msgObj: discord.Message): Promise<void>
+    process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void>
 }
 
 export interface IUser {
@@ -57,7 +57,7 @@ type MessageColor =
 export interface IBotMessage {
     readonly user: IUser
     setTextOnly(text: string): IBotMessage
-    addField(name: string, value: string): IBotMessage
+    addField(name: string, value: string, inline: boolean): IBotMessage
     addBlankField(): IBotMessage
     setColor(color: MessageColor): IBotMessage
     setDescription(description: string): IBotMessage

@@ -3,6 +3,9 @@ import { RichEmbed } from 'discord.js'
 import * as path from 'path'
 import { IBot, IBotCommand, IBotConfig, ILogger } from './api'
 import { BotMessage } from './message'
+import * as fs from 'fs'
+
+const xp = require("../xp.json");
 
 export class Bot implements IBot {
     public get commands(): IBotCommand[] { return this._commands }
@@ -18,10 +21,12 @@ export class Bot implements IBot {
     private _config!: IBotConfig;
     private _logger!: ILogger;
     private _botId!: string;
+    private _welcomeChannel!: discord.TextChannel;
 
     public start(logger: ILogger, config: IBotConfig, commandsPath: string, dataPath: string) {
         this._logger = logger
         this._config = config
+        this._welcomeChannel;
 
         this.loadCommands(commandsPath, dataPath)
 
@@ -34,30 +39,75 @@ export class Bot implements IBot {
             if (this._config.game) {
                 this._client.user.setGame(this._config.game)
             }
+            else{
+                this._client.user.setActivity('with Dapper Dino', {type: 'PLAYING'});
+            }
             if (this._config.username && this._client.user.username !== this._config.username) {
                 this._client.user.setUsername(this._config.username)
             }
             this._client.user.setStatus('online')
             this._logger.info('started...')
+            this._welcomeChannel = this._client.channels.get(this._config.welcomeChannel) as discord.TextChannel;
         })
 
         this._client.on('guildMemberAdd', async member => {
-            let welcomeChannel = this._client.channels.get(this._config.welcomeChannel) as any;
-            welcomeChannel.send(member + " welcome to the server :D");
+            let welcomeEmbed = new discord.RichEmbed()
+                .setTitle("Welcome " + member.user.username + "!")
+                .setColor("#ff0000")
+                .addField("Information", "I've just send you a PM with some details about the server, it would mean a lot if you were to give them a quick read.")
+                .addField("Thanks For Joining The Other " + (member.guild.memberCount - 1).toString() + " Of Us!", "Sincerely, your friend, DapperBot.")
+                if(member.user.avatarURL != null){
+                    welcomeEmbed.setImage(member.user.avatarURL);
+                }
+                else{
+                    welcomeEmbed.setImage(this._client.user.displayAvatarURL);
+                }
+            this._welcomeChannel.send(welcomeEmbed);
+            member.send("Hello " + member.displayName + ". Thanks for joining the server. Here are the server rules:");
+            let embed = new discord.RichEmbed()
+                .addField("Rule 1", "Keep the chat topics relevant to the channel you're using")
+                .addField("Rule 2", "No harassing others (we're all here to help and to learn)")
+                .addField("Rule 3", "No spam advertising (if there's anything you're proud of and you want it to be seen then put it in the showcase channel, but only once)")
+                .addField("Rule 4", "Don't go around sharing other people's work claiming it to be your own")
+                .addField("Rule 5", "You must only use ?report command for rule breaking and negative behaviour. Abusing this command will result if you being the one who is banned")
+                .setThumbnail(this._client.user.displayAvatarURL)
+                .setColor("0xff0000")
+                .setFooter("If these rules are broken then don't be surprised by a ban")
+            member.send(embed);
+            member.send("If you are happy with these rules then feel free to use the server as much as you like. The more members the merrier :D");
+            member.send("Use the command '?commands' to recieve a PM with all my commands and how to use them");
+            member.send("(I am currently being tested on by my creator so if someone goes wrong with me, don't panic, i'll be fixed. That's it from me. I'll see you around :)");
             member.addRole(member.guild.roles.find("name", "Member"));
+        })
+
+        this._client.on('guildMemberRemove', async member => {
+            this._welcomeChannel.send(member + ", it's a shame you had to leave us. We'll miss you :(");
         })
 
         this._client.on('message', async (message) => {
             if (message.author.id !== this._botId) {
                 const text = message.cleanContent;
                 this._logger.debug(`[${message.author.tag}] ${text}`);
-
+                if(!xp[message.author.id])
+                {
+                    console.log("Hello");
+                    xp[message.author.id] = {
+                        xp: 0,
+                        level: 1
+                    };
+                }
+                fs.writeFile("../xp.json", JSON.stringify(xp), (err) =>{
+                    if(err)
+                    {
+                        console.log(err);
+                    }
+                })
                 for (const cmd of this._commands) {
                     try {
                         if (cmd.isValid(text)) {
                             const answer = new BotMessage(message.author);
                             if (!this._config.idiots || !this._config.idiots.includes(message.author.id)) {
-                                await cmd.process(text, answer, message)
+                                await cmd.process(text, answer, message, this._client)
                             } else {
                                 if (this._config.idiotAnswer) {
                                     answer.setTextOnly(this._config.idiotAnswer)

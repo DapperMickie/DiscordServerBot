@@ -23,12 +23,13 @@
         "typescript": "^2.6.2"
     },
     "dependencies": {
+        "@types/superagent": "^3.8.3",
         "cheerio": "^1.0.0-rc.2",
-        "discord.js": "^11.3.2",
+        "discord.js": "^11.4.0",
         "gulp": "^3.9.1",
         "gulp-ts": "^0.3.0",
         "node": "^10.8.0",
         "node-fetch": "^1.7.3",
-        "path": "^0.12.7"
+        "superagent": "^3.8.3"
     }
 }

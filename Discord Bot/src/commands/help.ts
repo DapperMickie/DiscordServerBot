@@ -15,7 +15,7 @@ export default class HelpCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message): Promise<void> {
-        answer.setTextOnly(`Testing.`)
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void> {
+        answer.setTextOnly(`Testing.`);
     }
 }

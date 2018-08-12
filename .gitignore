@@ -59,7 +59,5 @@ typings/
 
 # next.js build output
 .next
-Discord Bot/config.json
-Discord Bot/xp.json
-Discord Bot/coins.json
 /.vs
+Discord Bot/xp.json
