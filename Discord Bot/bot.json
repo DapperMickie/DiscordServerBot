@@ -1,16 +1,22 @@
 {
     "game": "",
     "commands": [
+        "ban",
         "botinfo",
         "doggo",
+        "gif",
         "help",
+        "kick",
         "level",
         "mirror",
         "ping",
+        "report",
         "serverinfo"
     ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside",
     "welcomeChannel": "create bot.prod.json at same folder and put your welcome channel's id inside",
+    "reportChannel": "create bot.prod.json at same folder and put your report channel's id inside",
+    "kicksAndBansChannel": "create bot.prod.json at same folder and put your report channel's id inside",
     "idiots": [],
     "idiotAnswer": "",
     "name":"DapperBot"

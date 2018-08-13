@@ -96,6 +96,23 @@ export class Bot implements IBot {
                         level: 1
                     };
                 }
+                let xpAmt = Math.floor(Math.random() * 10) + 5;
+                let curxp = xp[message.author.id].xp; // Users current xp
+                let curlvl = xp[message.author.id].level; // Users current level
+                let nxtLvl = (xp[message.author.id].level * 200) * 1.2; // User's required xp for level up
+                xp[message.author.id].xp = curxp + xpAmt; // Increase the user's xp
+                if(nxtLvl <= xp[message.author.id].xp) // Check for level up
+                {
+                xp[message.author.id].level = curlvl + 1; // Incriment level
+                let embed = new discord.RichEmbed()
+                    .setTitle("Level Up!")
+                    .setColor("ff00ff")
+                    .addField("Congratulations", message.author)
+                    .addField("New Level:", curlvl + 1)
+                message.channel.send(embed).then(msg =>{
+                    (msg as any).delete(5000);
+                });
+                }
                 fs.writeFile("../xp.json", JSON.stringify(xp), (err) =>{
                     if(err)
                     {
@@ -107,7 +124,7 @@ export class Bot implements IBot {
                         if (cmd.isValid(text)) {
                             const answer = new BotMessage(message.author);
                             if (!this._config.idiots || !this._config.idiots.includes(message.author.id)) {
-                                await cmd.process(text, answer, message, this._client)
+                                await cmd.process(text, answer, message, this._client, this._config)
                             } else {
                                 if (this._config.idiotAnswer) {
                                     answer.setTextOnly(this._config.idiotAnswer)

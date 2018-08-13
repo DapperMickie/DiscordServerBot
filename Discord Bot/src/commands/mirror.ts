@@ -1,4 +1,4 @@
-import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
+import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../api'
 import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 
@@ -15,7 +15,7 @@ export default class MirrorCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
 
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
         if(msgObj.author.avatarURL != null){
             answer.setTextOnly(msgObj.member + " you're looking beautiful today :)"); //Sends a heart-warming response
             let m = await msgObj.channel.send(msgObj.author.avatarURL) as any; //Waits until it has sent our avatar icon then reacts to it with the emoji

@@ -1,4 +1,4 @@
-import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
+import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../api'
 import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 import { createSecurePair } from 'tls';
@@ -19,7 +19,7 @@ export default class LevelCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
         if(!xp[msgObj.author.id]){
             xp[msgObj.author.id] = {
                 xp: 0,
@@ -38,6 +38,11 @@ export default class LevelCommand implements IBotCommand {
             .addField("XP", curXp, true)
             .setFooter(`${difference} XP until level up`, msgObj.author.displayAvatarURL)
 
+        msgObj.channel.send(levelEmbed).then(newMsg =>{
+            msgObj.delete(0);
+            (newMsg as discord.Message).delete(5000);
+        })
+        
         fs.writeFile("../../xp.json", JSON.stringify(xp), (err) =>{
             if(err)
             {

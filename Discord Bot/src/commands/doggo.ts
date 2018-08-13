@@ -1,4 +1,4 @@
-import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
+import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../api'
 import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 import * as superAgent from 'superagent'
@@ -16,7 +16,7 @@ export default class DoggoCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
         let{body} = await superAgent
             .get(`https://random.dog/woof.json`)
         answer.setColor("#ff0000");

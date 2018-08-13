@@ -15,6 +15,8 @@ export interface ILogger {
 export interface IBotConfig {
     token: string
     welcomeChannel: string
+    reportChannel: string
+    kicksAndBansChannel: string
     commands: string[]
     game?: string
     username?: string
@@ -39,7 +41,7 @@ export interface IBotCommand {
     getHelp(): IBotCommandHelp
     init(bot: IBot, dataPath: string): void
     isValid(msg: string): boolean
-    process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client): Promise<void>
+    process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void>
 }
 
 export interface IUser {
