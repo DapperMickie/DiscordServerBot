@@ -11,7 +11,8 @@
         "mirror",
         "ping",
         "report",
-        "serverinfo"
+        "serverinfo",
+        "suggest"
     ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside",
     "welcomeChannel": "create bot.prod.json at same folder and put your welcome channel's id inside",

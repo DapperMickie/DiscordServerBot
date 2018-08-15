@@ -63,7 +63,7 @@ export class Bot implements IBot {
                     welcomeEmbed.setImage(this._client.user.displayAvatarURL);
                 }
             this._welcomeChannel.send(welcomeEmbed);
-            member.send("Hello " + member.displayName + ". Thanks for joining the server. Here are the server rules:");
+            member.send("Hello " + member.displayName + ". Thanks for joining the server. If you wish to leave a suggestion for a video, the server, the website or the bot then use the (?suggest 'example suggestion') command and we'll add it to a list. Anyway, here are the server rules:");
             let embed = new discord.RichEmbed()
                 .addField("Rule 1", "Keep the chat topics relevant to the channel you're using")
                 .addField("Rule 2", "No harassing others (we're all here to help and to learn)")

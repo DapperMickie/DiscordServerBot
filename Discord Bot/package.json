@@ -25,7 +25,7 @@
     "dependencies": {
         "@types/superagent": "^3.8.3",
         "cheerio": "^1.0.0-rc.2",
-        "discord.js": "^11.4.0",
+        "discord.js": "^11.4.2",
         "gulp": "^3.9.1",
         "gulp-ts": "^0.3.0",
         "node": "^10.8.0",
