@@ -7,7 +7,7 @@ export default class ServerInfoCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Suggest Command', description: '(?suggest "example suggestion") Saves your suggestions to a text file on Dapper Dino\'s PC to refer to when in need of video ideas' }
+        return { caption: '?suggest', description: '(?suggest "example suggestion") Saves your suggestions to a text file on Dapper Dino\'s PC to refer to when in need of video ideas' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -16,7 +16,7 @@ export default class ServerInfoCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let words = msg.split(' ');
         let suggestion = words.slice(1).join(' ');
         fs.appendFile('../suggestions.txt', "ID: " + msgObj.author + ", Username: " + msgObj.author.username + ", Suggestion: " + suggestion + "\n", function(err){

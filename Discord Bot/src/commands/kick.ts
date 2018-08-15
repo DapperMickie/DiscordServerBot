@@ -6,7 +6,7 @@ export default class HelpCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?kick/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Kick Command', description: 'ADMIN ONLY - (?kick @user reason) to kick the user from the server with a given reason' }
+        return { caption: '?kick', description: 'ADMIN ONLY - (?kick @user reason) to kick the user from the server with a given reason' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -15,7 +15,7 @@ export default class HelpCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let kickedUser = msgObj.guild.member(msgObj.mentions.users.first());
         if(!kickedUser)
         {

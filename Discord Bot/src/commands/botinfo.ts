@@ -6,7 +6,7 @@ export default class BotInfoCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?botinfo/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Bot Info Command', description: 'Here is some information about me, DapperBot' }
+        return { caption: '?botinfo', description: 'Here is some information about me, DapperBot' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -15,7 +15,7 @@ export default class BotInfoCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         answer.setDescription("Bot Information");
         answer.setColor("0xff0000");
         answer.setThumbnail(client.user.displayAvatarURL);

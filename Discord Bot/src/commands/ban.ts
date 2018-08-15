@@ -6,7 +6,7 @@ export default class BanCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?ban/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Ban Command', description: 'ADMIN ONLY - (?kick @user reason) to ban the user from the server with a given reason' }
+        return { caption: '?ban', description: 'ADMIN ONLY - (?ban @user reason) to ban the user from the server with a given reason' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -15,7 +15,7 @@ export default class BanCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let bannedUser = msgObj.guild.member(msgObj.mentions.users.first());
         if(!bannedUser)
         {

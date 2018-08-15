@@ -7,7 +7,7 @@ export default class ReportCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?report/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Report Command', description: '(?report @user reason) to file a report claim that will be processed by the Admins' }
+        return { caption: '?report', description: '(?report @user reason) to file a report claim that will be processed by the Admins' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -16,7 +16,7 @@ export default class ReportCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let reportedUser = msgObj.guild.member(msgObj.mentions.users.first());
         if(!reportedUser)
         {

@@ -6,7 +6,7 @@ export default class ServerInfoCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?serverinfo/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Server Info Command', description: 'Here is some information about our server' }
+        return { caption: '?serverinfo', description: 'Here is some information about our server' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -15,7 +15,7 @@ export default class ServerInfoCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         answer.setDescription("Server Information");
         answer.setColor("0xff0000");
         answer.setThumbnail(msgObj.guild.iconURL);

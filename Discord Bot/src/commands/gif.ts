@@ -10,7 +10,7 @@ export default class GifCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?gif/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Help Command', description: 'This is our help command' }
+        return { caption: '?gif', description: '(?gif "searchterm" Sends a gif from giphy with your search term' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -19,7 +19,7 @@ export default class GifCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let words = msg.split(' ');
         let q = words[1];
 

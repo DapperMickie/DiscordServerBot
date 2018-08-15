@@ -6,7 +6,7 @@ export default class HelpCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?help/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Help Command', description: 'This is our help command' }
+        return { caption: '?help', description: 'Sends you a list of all our commands, that\'ts how you got here in the first place' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -15,7 +15,24 @@ export default class HelpCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
-        answer.setTextOnly(`Testing.`);
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
+        let helpEmbed = new discord.RichEmbed()
+            .setTitle("Here is a list of all our commands")
+            .setColor("#ff0000");
+        let helpObj;
+        for (const cmd of commands)
+        {
+            helpObj = cmd.getHelp();
+            helpEmbed.addField(helpObj.caption,helpObj.description,false);
+        }
+        msgObj.author.send(helpEmbed);
+        let confirmationEmbed = new discord.RichEmbed()
+            .setTitle("Hello " + msgObj.author.username)
+            .setColor("#ff0000")
+            .addField("I've just sent you a pm with all the server's commands","I hope you enjoy your time here and make the most out of me, DapperBot",false)
+        msgObj.channel.send(confirmationEmbed).then(newMsg =>{
+            msgObj.delete(0);
+            (newMsg as discord.Message).delete(5000);
+        });
     }
 }

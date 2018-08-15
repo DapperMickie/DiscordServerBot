@@ -6,7 +6,7 @@ export default class PingCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?ping/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Ping Command', description: 'For testing latency and also having a little fun' }
+        return { caption: '?ping', description: 'For testing latency and also having a little fun' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -15,7 +15,7 @@ export default class PingCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
 
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let m = await msgObj.channel.send("Ping?") as any; //Sends a temporary message
         m.edit(`Pong! Latency is ${m.createdTimestamp - msgObj.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`) //Once the message has been sent and recieved it then calcualtes lantency and edits the previous message to inform the user
             .then(console.log)

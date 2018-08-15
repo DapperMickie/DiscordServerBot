@@ -7,7 +7,7 @@ export default class DoggoCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?doggo/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: 'Doggo Command', description: 'Summons a good boi :3' }
+        return { caption: '?doggo', description: 'Summons a good boi :3' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -16,7 +16,7 @@ export default class DoggoCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig): Promise<void> {
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
         let{body} = await superAgent
             .get(`https://random.dog/woof.json`)
         answer.setColor("#ff0000");
