@@ -10,7 +10,7 @@ export default class GifCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?gif/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?gif', description: '(?gif "searchterm" Sends a gif from giphy with your search term' }
+        return { caption: '?gif', description: '(?gif [searchterm] Sends a gif from giphy with your search term' }
     }
 
     public init(bot: IBot, dataPath: string): void { }

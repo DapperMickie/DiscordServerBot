@@ -6,7 +6,7 @@ export default class HelpCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?kick/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?kick', description: 'ADMIN ONLY - (?kick @user reason) to kick the user from the server with a given reason' }
+        return { caption: '?kick', description: 'ADMIN ONLY - (?kick [@user] [reason]) to kick the user from the server with a given reason' }
     }
 
     public init(bot: IBot, dataPath: string): void { }

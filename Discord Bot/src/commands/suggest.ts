@@ -7,7 +7,7 @@ export default class ServerInfoCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?suggest', description: '(?suggest "example suggestion") Saves your suggestions to a text file on Dapper Dino\'s PC to refer to when in need of video ideas' }
+        return { caption: '?suggest', description: '(?suggest [example suggestion]) Saves your suggestions to a text file on Dapper Dino\'s PC to refer to when in need of video ideas' }
     }
 
     public init(bot: IBot, dataPath: string): void { }

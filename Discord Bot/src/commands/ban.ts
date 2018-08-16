@@ -6,7 +6,7 @@ export default class BanCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?ban/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?ban', description: 'ADMIN ONLY - (?ban @user reason) to ban the user from the server with a given reason' }
+        return { caption: '?ban', description: 'ADMIN ONLY - (?ban [@user] [reason]) to ban the user from the server with a given reason' }
     }
 
     public init(bot: IBot, dataPath: string): void { }

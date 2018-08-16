@@ -4,6 +4,7 @@
         "ban",
         "botinfo",
         "doggo",
+        "flip",
         "gif",
         "help",
         "kick",
@@ -11,6 +12,8 @@
         "mirror",
         "ping",
         "report",
+        "roll",
+        "rps",
         "serverinfo",
         "suggest"
     ],

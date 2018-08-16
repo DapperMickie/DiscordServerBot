@@ -7,7 +7,7 @@ export default class ReportCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?report/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?report', description: '(?report @user reason) to file a report claim that will be processed by the Admins' }
+        return { caption: '?report', description: '(?report [@user] [reason]) to file a report claim that will be processed by the Admins' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
