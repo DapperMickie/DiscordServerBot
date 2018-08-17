@@ -40,7 +40,7 @@ export class Bot implements IBot {
                 this._client.user.setGame(this._config.game)
             }
             else{
-                this._client.user.setActivity('with Dapper Dino', {type: 'PLAYING'});
+                this._client.user.setActivity('with Dapper Dino | ?commands', {type: 'PLAYING'});
             }
             if (this._config.username && this._client.user.username !== this._config.username) {
                 this._client.user.setUsername(this._config.username)
@@ -63,7 +63,7 @@ export class Bot implements IBot {
                     welcomeEmbed.setImage(this._client.user.displayAvatarURL);
                 }
             this._welcomeChannel.send(welcomeEmbed);
-            member.send("Hello " + member.displayName + ". Thanks for joining the server. If you wish to use our bot then simply use the command '?help' in any channel and you'll recieve a pm with a list about all our commands. Anyway, here are the server rules:");
+            member.send("Hello " + member.displayName + ". Thanks for joining the server. If you wish to use our bot then simply use the command '?commands' in any channel and you'll recieve a pm with a list about all our commands. Anyway, here are the server rules:");
             let embed = new discord.RichEmbed()
                 .addField("Rule 1", "Keep the chat topics relevant to the channel you're using")
                 .addField("Rule 2", "No harassing others (we're all here to help and to learn)")
@@ -76,7 +76,7 @@ export class Bot implements IBot {
             member.send(embed);
             member.send("If you are happy with these rules then feel free to use the server as much as you like. The more members the merrier :D");
             member.send("Use the command '?commands' to recieve a PM with all my commands and how to use them");
-            member.send("(I am currently being tested on by my creator so if someone goes wrong with me, don't panic, i'll be fixed. That's it from me. I'll see you around :)");
+            member.send("(I am currently being tested on by my creator so if something goes wrong with me, don't panic, i'll be fixed. That's it from me. I'll see you around :)");
             member.addRole(member.guild.roles.find("name", "Member"));
         })
 

@@ -3,10 +3,10 @@ import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 
 export default class HelpCommand implements IBotCommand {
-    private readonly CMD_REGEXP = /^\?help/im
+    private readonly CMD_REGEXP = /^\?commands/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?help', description: 'Sends you a list of all our commands, that\'ts how you got here in the first place' }
+        return { caption: '?commands', description: 'Sends you a list of all our commands, that\'ts how you got here in the first place' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
