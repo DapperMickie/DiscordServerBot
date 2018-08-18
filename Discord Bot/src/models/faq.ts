@@ -1,6 +1,6 @@
 import * as resourceLink from './resourceLink'
 
-export interface ifaq {
+export interface faq {
     Description: string;
     Question:string;
     Answer:string;
