@@ -40,7 +40,7 @@ export class Bot implements IBot {
                 this._client.user.setGame(this._config.game)
             }
             else{
-                this._client.user.setActivity('with Dapper Dino | ?commands', {type: 'PLAYING'});
+                this._client.user.setActivity('?commands | With Dapper Dino', {type: 'PLAYING'});
             }
             if (this._config.username && this._client.user.username !== this._config.username) {
                 this._client.user.setUsername(this._config.username)

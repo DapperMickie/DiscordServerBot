@@ -1,6 +1,7 @@
 {
     "game": "",
     "commands": [
+        "addfaq",
         "ban",
         "botinfo",
         "commands",
