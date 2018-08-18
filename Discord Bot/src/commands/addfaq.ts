@@ -3,7 +3,7 @@ import { getRandomInt } from '../utils';
 import * as discord from 'discord.js';
 import * as faq from '../models/faq';
 
-export default class BotInfoCommand implements IBotCommand {
+export default class AddFaqCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?addfaq/im
 
     public getHelp(): IBotCommandHelp {
@@ -32,12 +32,37 @@ export default class BotInfoCommand implements IBotCommand {
         msgObj.channel.send(faqEmbed).then(newMsg =>{
             msgObj.delete(0);
         });
+
         let faqObject:faq.faq = new faq.faq();
 
-        // now add faq info here
+        faqObject.Question = faqQuestion;
+        faqObject.Answer = faqAnswer;
+        if(faqURL){
+            faqObject.ResourceLink.Link = faqURL;
+            faqObject.ResourceLink.DisplayName = faqURLDisplayname;
+        }
 
-        let request = new XMLHttpRequest();
-        request.open("POST", "http://dapperdinoapi.azurewebsites.net/api/faq", true);
-        request.send();
+        var request = require('request');
+
+        var headers = {
+            'User-Agent':       'DapperBot/0.0.1',
+            'Content-Type':     'application/json'
+        }
+
+        var options = {
+            url: 'http://dapperdinoapi.azurewebsites.net/api/faq',
+            method: 'POST',
+            headers: headers,
+            json: faqObject
+        }
+
+        request(options, (error:any, response:any, body:any) => {
+            if (!error && response.statusCode == 200) {
+                // Print out the response body
+                console.log(body)
+            }
+        })
+
+
     }
 }
