@@ -1,6 +1,7 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../api'
-import { getRandomInt } from '../utils'
-import * as discord from 'discord.js'
+import { getRandomInt } from '../utils';
+import * as discord from 'discord.js';
+import * as faq from '../models/faq';
 
 export default class BotInfoCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?addfaq/im
@@ -30,7 +31,11 @@ export default class BotInfoCommand implements IBotCommand {
         }
         msgObj.channel.send(faqEmbed).then(newMsg =>{
             msgObj.delete(0);
-        })
+        });
+        let faqObject:faq.faq = new faq.faq();
+
+        // now add faq info here
+
         let request = new XMLHttpRequest();
         request.open("POST", "http://dapperdinoapi.azurewebsites.net/api/faq", true);
         request.send();
