@@ -2,6 +2,7 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../
 import { getRandomInt } from '../utils';
 import * as discord from 'discord.js';
 import * as faq from '../models/faq';
+import * as resourceLink from '../models/resourceLink';
 
 export default class AddFaqCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?addfaq/im
@@ -38,6 +39,7 @@ export default class AddFaqCommand implements IBotCommand {
         faqObject.Question = faqQuestion;
         faqObject.Answer = faqAnswer;
         if(faqURL){
+            faqObject.ResourceLink = new resourceLink.resourceLink();
             faqObject.ResourceLink.Link = faqURL;
             faqObject.ResourceLink.DisplayName = faqURLDisplayname;
         }
