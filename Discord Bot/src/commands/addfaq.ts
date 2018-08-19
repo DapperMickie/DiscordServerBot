@@ -39,12 +39,9 @@ export default class AddFaqCommand implements IBotCommand {
         faqObject.Question = faqQuestion;
         faqObject.Answer = faqAnswer;
         if(faqURL){
-            console.log(faqURL);
-            console.log(faqURLDisplayname);
             faqObject.ResourceLink = new resourceLink.resourceLink();
             faqObject.ResourceLink.Link = faqURL;
             faqObject.ResourceLink.DisplayName = faqURLDisplayname;
-            console.log(faqObject);
         }
 
         var request = require('request');
@@ -63,7 +60,6 @@ export default class AddFaqCommand implements IBotCommand {
 
         request(options, (error:any, response:any, body:any) => {
             if (!error && response.statusCode == 200) {
-                // Print out the response body
                 console.log(body)
             }
         })
