@@ -3,6 +3,7 @@ import { getRandomInt } from '../utils';
 import * as discord from 'discord.js';
 import * as faq from '../models/faq';
 import * as resourceLink from '../models/resourceLink';
+import * as apiRequestHandler from '../apiRequestHandler';
 
 export default class AddFaqCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?addfaq/im
@@ -18,6 +19,11 @@ export default class AddFaqCommand implements IBotCommand {
     }
     
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
+        if(!msgObj.member.hasPermission("MANAGE_MESSAGES"))
+        {
+            msgObj.channel.send("You don't have the privileges to add to the FAQ channel!"); //Makes sure the user has the correct permissions to be able to use this command
+            return;
+        }
         let faqInfo = msg.split('|');
         let faqQuestion = faqInfo[1];
         let faqAnswer = faqInfo[2];
@@ -44,24 +50,6 @@ export default class AddFaqCommand implements IBotCommand {
             faqObject.ResourceLink.DisplayName = faqURLDisplayname;
         }
 
-        var request = require('request');
-
-        var headers = {
-            'User-Agent':       'DapperBot/0.0.1',
-            'Content-Type':     'application/json'
-        }
-
-        var options = {
-            url: 'http://dapperdinoapi.azurewebsites.net/api/faq',
-            method: 'POST',
-            headers: headers,
-            json: faqObject
-        }
-
-        request(options, (error:any, response:any, body:any) => {
-            if (!error && response.statusCode == 200) {
-                console.log(body)
-            }
-        })
+        new apiRequestHandler.apiRequestHandler().RequestAPI('POST', faqObject, 'http://dapperdinoapi.azurewebsites.net/api/faq', config);
     }
 }

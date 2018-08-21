@@ -17,6 +17,9 @@ export interface IBotConfig {
     welcomeChannel: string
     reportChannel: string
     kicksAndBansChannel: string
+    apiBearerToken: string
+    apiEmail: string
+    apiPassword: string
     commands: string[]
     game?: string
     username?: string
