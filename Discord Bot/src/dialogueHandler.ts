@@ -2,12 +2,14 @@ import * as discord from 'discord.js'
 
 export class dialogueHandler {
     private _steps: dialogueStep[] | dialogueStep;
+    private _data: any;
 
     /**
      *
      */
-    constructor(steps: dialogueStep[] | dialogueStep) {
+    constructor(steps: dialogueStep[] | dialogueStep, data: any) {
         this._steps = steps;
+        this._data = data;
     }
 
     public async GetInput(channel: discord.TextChannel) {
@@ -24,15 +26,16 @@ export class dialogueHandler {
             channel.awaitMessages(filter, { max: 1, time: 5000, errors: ['time'] })
                 .then(collected => {
                     response = collected.array()[0];
-                    
-                    if(step.callback!= undefined)
-                        step.callback(response);
-                    if(step.httpCallback!= undefined)
-                        step.httpCallback(response);
+
+                    if (step.callback != undefined)
+                        step.callback(response, this._data);
+                        
+                    if (step.httpCallback != undefined)
+                        step.httpCallback(response, this._data);
                 })
                 .catch(collected => channel.send("You didn't respond in time!"))
 
-             
+
         });
 
 
@@ -43,6 +46,5 @@ export class dialogueHandler {
 
 export interface dialogueStep {
     callback?: Function;
-    data: any;
     httpCallback?: Function;
 }
