@@ -11,7 +11,7 @@ export default class TicketCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?ticket/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?ticket', description: '(?ticket |[Subject]|[Description]) Creates a ticket' }
+        return { caption: '?ticket', description: 'Creates a ticket' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -22,18 +22,56 @@ export default class TicketCommand implements IBotCommand {
     
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
 
-        let handler = new dialogueHandler.dialogueHandler();
+        let ticketObject:ticket.ticket = new ticket.ticket();
+        ticketObject.Applicant = new applicant.applicant();
 
-        let x = await handler.GetInput(msgObj.channel as discord.TextChannel);
-        console.log(x);
+        let collectedInfo;
 
+        let a:dialogueHandler.dialogueStep = {callback:(response: string, data?: Array<string>) => {
+            if(data == null){
+                data = new Array<string>(response);
+            }
+            else{
+                data.push(response);
+            }
+            console.log(data.join(", "))
+            return data;
+        }}
+
+        let b:dialogueHandler.dialogueStep = {callback:(response: string, data?: Array<string>) => {
+            if(data == null){
+                data = new Array<string>(response);
+            }
+            else{
+                data.push(response);
+            }
+            console.log(data.join(", "))
+            return data;
+        }}
+
+        let c:dialogueHandler.dialogueStep = {callback:(response: string, data?: Array<string>) => {
+            if(data == null){
+                data = new Array<string>(response);
+            }
+            else{
+                data.push(response);
+            }
+            console.log(data.join(", "))
+            return data;
+        }}
+
+        let handler = new dialogueHandler.dialogueHandler([a,b,c], collectedInfo);
+
+        handler.GetInput(msgObj.channel as discord.TextChannel);
+
+        
 
         /*
         let ticketInfo = msg.split('|');
         let ticketSubject = ticketInfo[1];
         let ticketDescription = ticketInfo[2];
 
-        let ticketObject:ticket.ticket = new ticket.ticket();
+
         ticketObject.Subject = ticketSubject;
         ticketObject.Description = ticketDescription;
         ticketObject.Applicant = new applicant.applicant();
