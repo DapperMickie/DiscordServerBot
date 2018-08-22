@@ -9,7 +9,7 @@ export default class AddFaqCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?addfaq/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?addfaq', description: 'ADMIN ONLY - (?addfaq [question] [answer] [url(optional)] [url_displayname(optional)]) to add to the FAQ channel which is sync\'d to our website' }
+        return { caption: '?addfaq', description: 'ADMIN ONLY - (?addfaq |[question]|[answer]|[url(optional)]|[url_displayname(optional)]) to add to the FAQ channel which is sync\'d to our website' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -50,6 +50,6 @@ export default class AddFaqCommand implements IBotCommand {
             faqObject.ResourceLink.DisplayName = faqURLDisplayname;
         }
 
-        new apiRequestHandler.apiRequestHandler().RequestAPI('POST', faqObject, 'http://dapperdinoapi.azurewebsites.net/api/faq', config);
+        new apiRequestHandler.apiRequestHandler().RequestAPI('POST', faqObject, 'https://dapperdinoapi.azurewebsites.net/api/faq', config);
     }
 }

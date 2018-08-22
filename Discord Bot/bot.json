@@ -15,7 +15,8 @@
         "roll",
         "rps",
         "serverinfo",
-        "suggest"
+        "suggest",
+        "ticket"
     ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside",
     "welcomeChannel": "create bot.prod.json at same folder and put your welcome channel's id inside",

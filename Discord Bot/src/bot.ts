@@ -90,7 +90,6 @@ export class Bot implements IBot {
                 this._logger.debug(`[${message.author.tag}] ${text}`);
                 if(!xp[message.author.id])
                 {
-                    console.log("Hello");
                     xp[message.author.id] = {
                         xp: 0,
                         level: 1

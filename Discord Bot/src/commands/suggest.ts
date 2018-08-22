@@ -6,7 +6,7 @@ import * as suggest from '../models/suggest';
 import * as discordUser from '../models/discordUser';
 import * as apiRequestHandler from '../apiRequestHandler';
 
-export default class ServerInfoCommand implements IBotCommand {
+export default class SuggestCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
 
     public getHelp(): IBotCommandHelp {
@@ -65,7 +65,7 @@ export default class ServerInfoCommand implements IBotCommand {
         suggestObject.DiscordUser.Username = msgObj.author.username;
         suggestObject.DiscordUser.DiscordId = msgObj.author.id;
 
-        new apiRequestHandler.apiRequestHandler().RequestAPI('POST', suggestObject, 'http://dapperdinoapi.azurewebsites.net/api/suggestion', config);
+        new apiRequestHandler.apiRequestHandler().RequestAPI('POST', suggestObject, 'https://dapperdinoapi.azurewebsites.net/api/suggestion', config);
         
     }
 }
