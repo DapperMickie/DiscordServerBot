@@ -24,7 +24,7 @@ export class dialogueHandler {
 
             let response;
 
-            channel.awaitMessages(filter, { max: 3 })
+            channel.awaitMessages(filter, { max: 1, time: 5000, errors: ['time'] })
                 .then(collected => {
                     response = collected.array()[0];
 
