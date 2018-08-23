@@ -20,11 +20,11 @@ export class dialogueHandler {
         }
 
         this._steps.forEach(step => {
-            const filter = m => m;
+            const filter = m =>false;
 
             let response;
 
-            channel.awaitMessages(filter, { max: 3, time: 5000, errors: ['time'] })
+            channel.awaitMessages(filter, { max: 3 })
                 .then(collected => {
                     response = collected.array()[0];
 
@@ -34,10 +34,10 @@ export class dialogueHandler {
                     if (step.httpCallback != null)
                         this._data = step.httpCallback(response, this._data);
                 })
-                .catch(collected => channel.send("You didn't respond in time!"))
+                .catch(collected => channel.send(`You didn't respond in time!`))
 
 
-        });
+        })
 
 
         return;
@@ -53,6 +53,7 @@ export class dialogueStep implements dialogueStep {
         this.callback = callback;
         this.httpCallback = httpCallback;
         this.returnMessage = returnMessage;
+        this.editMessage = editMessage;
     }
 }
 

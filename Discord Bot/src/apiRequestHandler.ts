@@ -10,7 +10,7 @@ export class apiRequestHandler {
         'Authorization':        ``
     }
 
-    public async RequestAPI(httpType: 'post'|'delete'|'put'|'patch'|'get'|'head'|'options'|'connect'|'trace', data: any, requestUrl: string, config: IBotConfig) {
+    public async RequestAPI(httpType: 'POST'|'DELETE'|'PUT'|'PATCH'|'GET'|'HEAD'|'OPTIONS'|'CONNECT'|'TRACE', data: any, requestUrl: string, config: IBotConfig) {
 
         this._headers.Authorization = `Bearer ${config.apiBearerToken}`;
 

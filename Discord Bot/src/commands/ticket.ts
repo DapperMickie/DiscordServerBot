@@ -37,10 +37,13 @@ export default class TicketCommand implements IBotCommand {
         ticketObject.Applicant = new applicant.applicant();
 
         let collectedInfo;
-        
-        let test:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer);
+        //datacallback
 
-        let handler = new dialogueHandler.dialogueHandler([test], collectedInfo);
+        let test:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer,this.cbFunc);
+        let test2:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer);
+        let test3:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer);
+
+        let handler = new dialogueHandler.dialogueHandler(test, collectedInfo);
 
         handler.GetInput(msgObj.channel as discord.TextChannel);
 
