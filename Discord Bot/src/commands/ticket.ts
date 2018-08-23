@@ -19,35 +19,35 @@ export default class TicketCommand implements IBotCommand {
     public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
-    
-    cbFunc = (response: string, data?: Array<string>) => {
-        if(data == null){
-            data = new Array<string>(response);
+
+    cbFunc = (args: any) => {
+        if (args.data == null) {
+            args.data = new Array<string>(args.response);
         }
-        else{
-            data.push(response);
+        else {
+            args.data.push(args.response);
         }
-        console.log(data.join(", "))
-        return data;
+        console.log(args.data.join(", "))
+        return args.data;
     };
 
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
 
-        let ticketObject:ticket.ticket = new ticket.ticket();
+        let ticketObject: ticket.ticket = new ticket.ticket();
         ticketObject.Applicant = new applicant.applicant();
 
         let collectedInfo;
         //datacallback
 
-        let test:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer,this.cbFunc);
-        let test2:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer);
-        let test3:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer);
+        let test: dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer, this.cbFunc, collectedInfo);
+        let test2: dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer, this.cbFunc, collectedInfo);
+        let test3: dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer, this.cbFunc, collectedInfo);
 
-        let handler = new dialogueHandler.dialogueHandler(test, collectedInfo);
+        let handler = new dialogueHandler.dialogueHandler([test, test2, test3], collectedInfo);
 
         handler.GetInput(msgObj.channel as discord.TextChannel);
 
-        
+
 
         /*
         let ticketInfo = msg.split('|');
