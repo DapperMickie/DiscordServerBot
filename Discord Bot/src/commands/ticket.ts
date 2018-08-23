@@ -45,7 +45,7 @@ export default class TicketCommand implements IBotCommand {
 
         let handler = new dialogueHandler.dialogueHandler([test, test2, test3], collectedInfo);
 
-        handler.GetInput(msgObj.channel as discord.TextChannel);
+        await handler.GetInput(msgObj.channel as discord.TextChannel, msgObj.member);
 
 
 

@@ -13,18 +13,17 @@ export class dialogueHandler {
         this._data = data;
     }
 
-    public async GetInput(channel: discord.TextChannel) {
+    public async GetInput(channel: discord.TextChannel, ticketUser: discord.GuildMember) {
         // Create array for single dialogueStep to prevent extra checks + coding
         if (!Array.isArray(this._steps)) {
             this._steps = [this._steps];
         }
-
-        this._steps.forEach(step => {
-            const filter = m =>false;
-
+        for (const step of this._steps) {
+            const filter = m => (m.member == ticketUser);
+            
             let response;
 
-            channel.awaitMessages(filter, { max: 1, time: 5000, errors: ['time'] })
+            await channel.awaitMessages(filter, { max: 1 })
                 .then(collected => {
                     response = collected.array()[0];
 
@@ -33,11 +32,16 @@ export class dialogueHandler {
 
                     if (step.httpCallback != null)
                         this._data = step.httpCallback(response, this._data);
+
+                    channel.send(step.returnMessage);
                 })
-                .catch(collected => channel.send(`You didn't respond in time!`))
+                .catch(collected => {
+                    console.log(collected);
+                    channel.send(`You didn't respond in time!`)
+                });
 
-
-        })
+            
+        }
 
 
         return;
