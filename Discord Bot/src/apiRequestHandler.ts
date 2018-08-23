@@ -10,7 +10,7 @@ export class apiRequestHandler {
         'Authorization':        ``
     }
 
-    public RequestAPI(httpType: string, data: any, requestUrl: string, config: IBotConfig) {
+    public async RequestAPI(httpType: string, data: any, requestUrl: string, config: IBotConfig) {
 
         this._headers.Authorization = `Bearer ${config.apiBearerToken}`;
 
@@ -33,6 +33,7 @@ export class apiRequestHandler {
                 console.log("Unauthorized");
             }
         })
+        .then()
     }
 
     public GenerateNewToken(first_options: any, config: IBotConfig){

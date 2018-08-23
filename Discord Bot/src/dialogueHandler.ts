@@ -1,4 +1,5 @@
 import * as discord from 'discord.js'
+import * as api from './api.js'
 
 export class dialogueHandler {
     private _steps: dialogueStep[] | dialogueStep;
@@ -29,7 +30,7 @@ export class dialogueHandler {
 
                     if (step.callback != null)
                         this._data = step.callback(response, this._data);
-                        
+
                     if (step.httpCallback != null)
                         this._data = step.httpCallback(response, this._data);
                 })
@@ -44,7 +45,21 @@ export class dialogueHandler {
     }
 }
 
+export class dialogueStep implements dialogueStep {
+    /**
+     *
+     */
+    constructor(returnMessage: api.IBotMessage, callback?: Function, httpCallback?: Function,editMessage?:Function) {
+        this.callback = callback;
+        this.httpCallback = httpCallback;
+        this.returnMessage = returnMessage;
+    }
+}
+
 export interface dialogueStep {
     callback?: Function;
     httpCallback?: Function;
+    editMessage?:Function;
+    returnMessage: api.IBotMessage;
+
 }

@@ -20,47 +20,27 @@ export default class TicketCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     
+    cbFunc = (response: string, data?: Array<string>) => {
+        if(data == null){
+            data = new Array<string>(response);
+        }
+        else{
+            data.push(response);
+        }
+        console.log(data.join(", "))
+        return data;
+    };
+
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
 
         let ticketObject:ticket.ticket = new ticket.ticket();
         ticketObject.Applicant = new applicant.applicant();
 
         let collectedInfo;
+        
+        let test:dialogueHandler.dialogueStep = new dialogueHandler.dialogueStep(answer);
 
-        let a:dialogueHandler.dialogueStep = {callback:(response: string, data?: Array<string>) => {
-            if(data == null){
-                data = new Array<string>(response);
-            }
-            else{
-                data.push(response);
-            }
-            console.log(data.join(", "))
-            return data;
-        }}
-
-        let b:dialogueHandler.dialogueStep = {callback:(response: string, data?: Array<string>) => {
-            if(data == null){
-                data = new Array<string>(response);
-            }
-            else{
-                data.push(response);
-            }
-            console.log(data.join(", "))
-            return data;
-        }}
-
-        let c:dialogueHandler.dialogueStep = {callback:(response: string, data?: Array<string>) => {
-            if(data == null){
-                data = new Array<string>(response);
-            }
-            else{
-                data.push(response);
-            }
-            console.log(data.join(", "))
-            return data;
-        }}
-
-        let handler = new dialogueHandler.dialogueHandler([a,b,c], collectedInfo);
+        let handler = new dialogueHandler.dialogueHandler([test], collectedInfo);
 
         handler.GetInput(msgObj.channel as discord.TextChannel);
 

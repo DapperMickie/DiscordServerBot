@@ -4,7 +4,7 @@ import * as discord from 'discord.js'
 import * as fs from 'fs'
 import * as suggest from '../models/suggest';
 import * as discordUser from '../models/discordUser';
-import * as apiRequestHandler from '../apiRequestHandler';
+import {apiRequestHandler} from '../apiRequestHandler';
 
 export default class SuggestCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
@@ -65,7 +65,7 @@ export default class SuggestCommand implements IBotCommand {
         suggestObject.DiscordUser.Username = msgObj.author.username;
         suggestObject.DiscordUser.DiscordId = msgObj.author.id;
 
-        new apiRequestHandler.apiRequestHandler().RequestAPI('POST', suggestObject, 'https://dapperdinoapi.azurewebsites.net/api/suggestion', config);
+        new apiRequestHandler().RequestAPI('POST', suggestObject, 'https://dapperdinoapi.azurewebsites.net/api/suggestion', config);
         
     }
 }
