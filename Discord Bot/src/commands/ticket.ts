@@ -20,7 +20,7 @@ export default class TicketCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
 
-    cbFunc = (response: any, data: any) => {
+    cbFunc = (response: any, data: any, endEarly: any) => {
         if (data == null) {
             data = new Array<string>(response);
         }
@@ -28,7 +28,7 @@ export default class TicketCommand implements IBotCommand {
             data.push(response);
         }
         console.log(data.join(", "))
-        return data;
+        return [data, endEarly];
     };
 
     httpFunc = (response: any, data: any, ticketuser: any, config: any) => {

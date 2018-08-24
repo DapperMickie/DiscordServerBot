@@ -4,6 +4,7 @@ import * as api from './api.js'
 export class dialogueHandler {
     private _steps: dialogueStep[] | dialogueStep;
     private _data: any;
+    private _endEarly: boolean;
 
     /**
      *
@@ -11,6 +12,8 @@ export class dialogueHandler {
     constructor(steps: dialogueStep[] | dialogueStep, data: any) {
         this._steps = steps;
         this._data = data;
+        this._endEarly = false;
+        
     }
 
     public async GetInput(channel: discord.TextChannel, ticketUser: discord.GuildMember, config: api.IBotConfig) {
@@ -31,11 +34,16 @@ export class dialogueHandler {
                 .then(collected => {
                     response = collected.array()[0];
 
-                    if (step.callback != null)
-                        this._data = step.callback(response.content, this._data);
+                    if (step.callback != null){
+                         [this._data, this._endEarly] = step.callback(response.content, this._data, this._endEarly);
+   
+                    }
 
-                    if (step.httpCallback != null)
+                    if (step.httpCallback != null){
                         this._data = step.httpCallback(response.content, this._data, ticketUser, config);
+                    }
+
+                    console.log("DH " + this._endEarly)
 
                     //channel.send(step.succeedMessage).then(newMsg =>{
                     //    (newMsg as any).delete(1000);
@@ -46,6 +54,9 @@ export class dialogueHandler {
                 });
             beforeM.delete(0);
             response.delete(0);
+            if(this._endEarly == true){
+                return this._data;
+            }
         }
 
         return this._data;

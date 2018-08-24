@@ -19,15 +19,21 @@ export default class AddFaqCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
 
-    cbFunc = (response: any, data: any) => {
+    cbFunc = (response: any, data: any, endEarly: any) => {
         if (data == null) {
             data = new Array<string>(response);
         }
         else {
             data.push(response);
         }
-        console.log(data.join(", "))
-        return data;
+        if(data[2]){
+            if(data[2] != 'yes' || data[2] == 'Yes'){
+                endEarly = true;
+            }
+        }
+        console.log("cbfunc " + endEarly);
+        console.log(data.join(", "));
+        return [data, endEarly];
     };
 
     httpFunc = (response: any, data: any, ticketuser: any, config: any) => {
@@ -56,15 +62,20 @@ export default class AddFaqCommand implements IBotCommand {
         let collectedInfo;
         //datacallback
 
-        let test: dialogueStep = new dialogueStep("what would you like the title of your ticket to be?", "Title Successful", "Title Unsuccessful", this.cbFunc, collectedInfo);
+        let test: dialogueStep = new dialogueStep("Enter Question:", "Question Successful", "Question Unsuccessful", this.cbFunc, collectedInfo);
+        let test2: dialogueStep = new dialogueStep("Enter Answer:", "Answer Successful", "Answer Unsuccessful", this.cbFunc, collectedInfo);
+        let test3: dialogueStep = new dialogueStep("Would you like to add a resourceful URL related to the FAQ? (Enter 'yes' if so, otherwise enter 'no')", "URL Choice Successful", "URL Choice Unsuccessful", this.cbFunc, collectedInfo);
+        let test4: dialogueStep = new dialogueStep("Enter URL:", "URL Successful", "URL Unsuccessful", this.cbFunc, collectedInfo);
+        let test5: dialogueStep = new dialogueStep("Enter URL Mask:", "URL Mask Successful", "URL Mask Unsuccessful", this.cbFunc, this.httpFunc, collectedInfo);
 
-        let handler = new dialogueHandler([], collectedInfo);
+        let handler = new dialogueHandler([test, test2, test3, test4, test5], collectedInfo);
 
         collectedInfo = await handler.GetInput(msgObj.channel as discord.TextChannel, msgObj.member, config as IBotConfig);
 
         let faqEmbed = new discord.RichEmbed()
             .setTitle("-Q: " + collectedInfo[0])
             .setDescription("-A: " + collectedInfo[1])
+            .setColor("#2dff2d")
         if(collectedInfo[2] == 'yes' || collectedInfo == 'Yes')
         {
             faqEmbed.addField("Useful Resource: ", "[" + collectedInfo[4] + "](" + collectedInfo[3] + ")");
