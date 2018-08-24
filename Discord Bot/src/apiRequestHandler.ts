@@ -33,7 +33,6 @@ export class apiRequestHandler {
                 console.log("Unauthorized");
             }
         })
-        .then()
     }
 
     public GenerateNewToken(first_options: any, config: IBotConfig){

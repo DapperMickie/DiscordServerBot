@@ -2,9 +2,9 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../
 import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 import * as fs from 'fs'
-import * as suggest from '../models/suggest';
-import * as discordUser from '../models/discordUser';
-import {apiRequestHandler} from '../apiRequestHandler';
+import { suggest, SuggestionTypes } from '../models/suggest';
+import { discordUser } from '../models/discordUser';
+import { apiRequestHandler } from '../apiRequestHandler';
 
 export default class SuggestCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
@@ -20,22 +20,22 @@ export default class SuggestCommand implements IBotCommand {
     }
     
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
-        let suggestObject:suggest.suggest = new suggest.suggest();
+        let suggestObject:suggest = new suggest();
         let words = msg.split(' ');
         let suggestType = words[1];
         let suggestion = words.slice(2).join(' ');
         switch(suggestType){
             case "Bot":
-                suggestObject.Type = suggest.SuggestionTypes.Bot;
+                suggestObject.Type = SuggestionTypes.Bot;
                 break;
             case "Website":
-                suggestObject.Type = suggest.SuggestionTypes.Website;
+                suggestObject.Type = SuggestionTypes.Website;
                 break;
             case "General":
-                suggestObject.Type = suggest.SuggestionTypes.General;
+                suggestObject.Type = SuggestionTypes.General;
                 break;
             case "Youtube":
-                suggestObject.Type = suggest.SuggestionTypes.Youtube;
+                suggestObject.Type = SuggestionTypes.Youtube;
                 break;
             default:
                 let wrongFormatEmbed = new discord.RichEmbed()
@@ -61,7 +61,7 @@ export default class SuggestCommand implements IBotCommand {
         answer.setFooter("Sit tight and I might get around to your idea... eventually :D");
 
         suggestObject.Description = suggestion;
-        suggestObject.DiscordUser = new discordUser.discordUser();
+        suggestObject.DiscordUser = new discordUser();
         suggestObject.DiscordUser.Username = msgObj.author.username;
         suggestObject.DiscordUser.DiscordId = msgObj.author.id;
 

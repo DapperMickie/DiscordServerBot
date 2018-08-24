@@ -13,7 +13,7 @@ export class dialogueHandler {
         this._data = data;
     }
 
-    public async GetInput(channel: discord.TextChannel, ticketUser: discord.GuildMember) {
+    public async GetInput(channel: discord.TextChannel, ticketUser: discord.GuildMember, config: api.IBotConfig) {
         // Create array for single dialogueStep to prevent extra checks + coding
         if (!Array.isArray(this._steps)) {
             this._steps = [this._steps];
@@ -21,30 +21,34 @@ export class dialogueHandler {
         for (const step of this._steps) {
             const filter = m => (m.member == ticketUser);
             
-            let response;
+            let response, beforeM;
 
-            await channel.awaitMessages(filter, { max: 1 })
+            channel.send(ticketUser + ", " + step.beforeMessage).then(newMsg =>{
+                beforeM = newMsg;
+            });
+
+            await channel.awaitMessages(filter, { max:  1})
                 .then(collected => {
                     response = collected.array()[0];
 
                     if (step.callback != null)
-                        this._data = step.callback(response, this._data);
+                        this._data = step.callback(response.content, this._data);
 
                     if (step.httpCallback != null)
-                        this._data = step.httpCallback(response, this._data);
+                        this._data = step.httpCallback(response.content, this._data, ticketUser, config);
 
-                    channel.send(step.returnMessage);
+                    //channel.send(step.succeedMessage).then(newMsg =>{
+                    //    (newMsg as any).delete(1000);
+                    //});
                 })
                 .catch(collected => {
-                    console.log(collected);
-                    channel.send(`You didn't respond in time!`)
+                    channel.send(step.errorMessage);
                 });
-
-            
+            beforeM.delete(0);
+            response.delete(0);
         }
 
-
-        return;
+        return this._data;
 
     }
 }
@@ -53,10 +57,12 @@ export class dialogueStep implements dialogueStep {
     /**
      *
      */
-    constructor(returnMessage: api.IBotMessage, callback?: Function, httpCallback?: Function,editMessage?:Function) {
+    constructor(beforeMessage: string, succeedMessage?: string, errorMessage?: string, callback?: Function, httpCallback?: Function, editMessage?:Function) {
         this.callback = callback;
         this.httpCallback = httpCallback;
-        this.returnMessage = returnMessage;
+        this.beforeMessage = beforeMessage;
+        this.succeedMessage = succeedMessage;
+        this.errorMessage = errorMessage;
         this.editMessage = editMessage;
     }
 }
@@ -65,6 +71,7 @@ export interface dialogueStep {
     callback?: Function;
     httpCallback?: Function;
     editMessage?:Function;
-    returnMessage: api.IBotMessage;
-
+    beforeMessage: string;
+    succeedMessage?: string;
+    errorMessage?: string;
 }
