@@ -54,7 +54,7 @@ export class Bot implements IBot {
             let welcomeEmbed = new discord.RichEmbed()
                 .setTitle("Welcome " + member.user.username + "!")
                 .setColor("#ff0000")
-                .addField("Information", "I've just send you a PM with some details about the server, it would mean a lot if you were to give them a quick read.")
+                .addField("Information", "I've just sent you a PM with some details about the server, it would mean a lot if you were to give them a quick read.")
                 .addField("Thanks For Joining The Other " + (member.guild.memberCount - 1).toString() + " Of Us!", "Sincerely, your friend, DapperBot.")
                 if(member.user.avatarURL != null){
                     welcomeEmbed.setImage(member.user.avatarURL);
