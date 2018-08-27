@@ -37,7 +37,7 @@ export default class TicketCommand implements IBotCommand {
 
         ticketObject.Subject = data[0];
         ticketObject.Description = data[1];
-        ticketObject.Applicant.Username = ticketuser.username;
+        ticketObject.Applicant.Username = ticketuser.displayName;
         ticketObject.Applicant.DiscordId = ticketuser.id;
 
         new apiRequestHandler().RequestAPI("POST", ticketObject, 'https://dapperdinoapi.azurewebsites.net/api/ticket', config);
@@ -50,13 +50,10 @@ export default class TicketCommand implements IBotCommand {
         let collectedInfo;
         //datacallback
 
-        let test: dialogueStep = new dialogueStep("What is the Question?", "Question Successful", "Question Unsuccessful", this.cbFunc, collectedInfo);
-        let test2: dialogueStep = new dialogueStep("What is the Answer?", "Answer Successful", "Answer Unsuccessful", this.cbFunc, collectedInfo);
-        let test3: dialogueStep = new dialogueStep("Would you like to add a URL? (If so, type 'yes', otherwse type anything else)", "URL Successful", "URL Unsuccessful", this.cbFunc, collectedInfo);
-        let test4: dialogueStep = new dialogueStep("What is the URL?)", "URL Successful", "URL Unsuccessful", this.cbFunc, collectedInfo);
-        let test5: dialogueStep = new dialogueStep("What is the URL Mask?)", "URL Mask Successful", "URL Unsuccessful", this.cbFunc, collectedInfo);
+        let test: dialogueStep = new dialogueStep("Enter a title for your ticket, quickly summarise the problem that you are having:", "Title Successful", "Title Unsuccessful", this.cbFunc, collectedInfo);
+        let test2: dialogueStep = new dialogueStep("Enter a description for your ticket. Please be as descriptive as possible so that whoever is assigned to help you knows in depth what you are struggling with:", "Description Successful", "Description Unsuccessful", this.cbFunc, this.httpFunc, collectedInfo);
 
-        let handler = new dialogueHandler([test, test2, test3, test4, test5], collectedInfo);
+        let handler = new dialogueHandler([test, test2], collectedInfo);
 
         collectedInfo = await handler.GetInput(msgObj.channel as discord.TextChannel, msgObj.member, config as IBotConfig);
 

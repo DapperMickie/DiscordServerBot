@@ -38,16 +38,17 @@ export default class AddFaqCommand implements IBotCommand {
 
     httpFunc = (response: any, data: any, ticketuser: any, config: any) => {
         let faqObject:faq = new faq();
-
         faqObject.Question = data[0];
         faqObject.Answer = data[1];
-        if(data[2] == 'yes' || data[2] == 'Yes'){
+        if(data[2].toLowerCase() == 'yes' && data[3] != null && data[4] != null){
             faqObject.ResourceLink = new resourceLink();
             faqObject.ResourceLink.Link = data[3];
             faqObject.ResourceLink.DisplayName = data[4];
+            new apiRequestHandler().RequestAPI("POST", faqObject, 'https://dapperdinoapi.azurewebsites.net/api/faq', config);
         }
-
-        new apiRequestHandler().RequestAPI("POST", faqObject, 'https://dapperdinoapi.azurewebsites.net/api/faq', config);
+        else if(data[2].toLowerCase() != 'yes'){
+            new apiRequestHandler().RequestAPI("POST", faqObject, 'https://dapperdinoapi.azurewebsites.net/api/faq', config);
+        }
 
         return data;
     };
@@ -64,7 +65,7 @@ export default class AddFaqCommand implements IBotCommand {
 
         let test: dialogueStep = new dialogueStep("Enter Question:", "Question Successful", "Question Unsuccessful", this.cbFunc, collectedInfo);
         let test2: dialogueStep = new dialogueStep("Enter Answer:", "Answer Successful", "Answer Unsuccessful", this.cbFunc, collectedInfo);
-        let test3: dialogueStep = new dialogueStep("Would you like to add a resourceful URL related to the FAQ? (Enter 'yes' if so, otherwise enter 'no')", "URL Choice Successful", "URL Choice Unsuccessful", this.cbFunc, collectedInfo);
+        let test3: dialogueStep = new dialogueStep("Would you like to add a resourceful URL related to the FAQ? (Enter 'Yes' if so, otherwise enter 'No')", "URL Choice Successful", "URL Choice Unsuccessful", this.cbFunc, this.httpFunc, collectedInfo);
         let test4: dialogueStep = new dialogueStep("Enter URL:", "URL Successful", "URL Unsuccessful", this.cbFunc, collectedInfo);
         let test5: dialogueStep = new dialogueStep("Enter URL Mask:", "URL Mask Successful", "URL Mask Unsuccessful", this.cbFunc, this.httpFunc, collectedInfo);
 
@@ -76,7 +77,7 @@ export default class AddFaqCommand implements IBotCommand {
             .setTitle("-Q: " + collectedInfo[0])
             .setDescription("-A: " + collectedInfo[1])
             .setColor("#2dff2d")
-        if(collectedInfo[2] == 'yes' || collectedInfo == 'Yes')
+        if(collectedInfo[2].toLowerCase() == 'yes')
         {
             faqEmbed.addField("Useful Resource: ", "[" + collectedInfo[4] + "](" + collectedInfo[3] + ")");
         }

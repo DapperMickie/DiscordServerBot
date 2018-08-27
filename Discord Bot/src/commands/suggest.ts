@@ -5,6 +5,7 @@ import * as fs from 'fs'
 import { suggest, SuggestionTypes } from '../models/suggest';
 import { discordUser } from '../models/discordUser';
 import { apiRequestHandler } from '../apiRequestHandler';
+import { dialogueStep, dialogueHandler } from '../dialogueHandler';
 
 export default class SuggestCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
@@ -18,35 +19,59 @@ export default class SuggestCommand implements IBotCommand {
     public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
-    
-    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
+
+    cbFunc = (response: any, data: any, endEarly: any) => {
+        if (data == null) {
+            data = new Array<string>(response);
+        }
+        else {
+            data.push(response);
+        }
+        console.log(data.join(", "))
+        return [data, endEarly];
+    };
+
+    httpFunc = (response: any, data: any, ticketuser: any, config: any) => {
         let suggestObject:suggest = new suggest();
-        let words = msg.split(' ');
-        let suggestType = words[1];
-        let suggestion = words.slice(2).join(' ');
-        switch(suggestType){
-            case "Bot":
+        suggestObject.Description = data[1];
+        suggestObject.DiscordUser = new discordUser();
+        suggestObject.DiscordUser.Username = ticketuser.displayName;
+        suggestObject.DiscordUser.DiscordId = ticketuser.id;   
+        switch(data[0].toLowerCase()){
+            case "bot":
                 suggestObject.Type = SuggestionTypes.Bot;
                 break;
-            case "Website":
+            case "website":
                 suggestObject.Type = SuggestionTypes.Website;
                 break;
-            case "General":
+            case "general":
                 suggestObject.Type = SuggestionTypes.General;
                 break;
-            case "Youtube":
+            case "youtube":
                 suggestObject.Type = SuggestionTypes.Youtube;
                 break;
             default:
-                let wrongFormatEmbed = new discord.RichEmbed()
-                    .setTitle("Incorrect Format")
-                    .setColor("#ff0000")
-                    .addField("Please enter a suggestion category related to your request", "eg. ?suggest Bot Please add a music command to your bot",false)
-                    .addField("Replace Bot with either 'Bot', 'Website', 'General' or 'Youtube'","eg. ?suggest Youtube make a video about sprite shaders ",false)
-                msgObj.channel.send(wrongFormatEmbed);
-                return;
+                suggestObject.Type = SuggestionTypes.Undecided;
         }
-        fs.appendFile('../suggestions.txt', "ID: " + msgObj.author + ", Username: " + msgObj.author.username + ", Suggestion: " + suggestion + "\n", function(err){
+
+        new apiRequestHandler().RequestAPI('POST', suggestObject, 'https://dapperdinoapi.azurewebsites.net/api/suggestion', config);
+
+        return data;
+    };
+    
+    public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
+
+        let collectedInfo;
+        //datacallback
+
+        let test: dialogueStep = new dialogueStep("Enter the category that best suits your suggestion. Choose from 'Bot', 'Website', 'General' or 'Youtube'.", "Type Successful", "Type Unsuccessful", this.cbFunc, collectedInfo);
+        let test2: dialogueStep = new dialogueStep("Enter your suggestion:", "Suggestion Successful", "Suggestion Unsuccessful", this.cbFunc, this.httpFunc, collectedInfo);
+        
+        let handler = new dialogueHandler([test, test2], collectedInfo);
+
+        collectedInfo = await handler.GetInput(msgObj.channel as discord.TextChannel, msgObj.member, config as IBotConfig);
+
+        fs.appendFile('../suggestions.txt', "ID: " + msgObj.author + ", Username: " + msgObj.author.username + ", Suggestion: " + collectedInfo[1] + "\n", function(err){
             if(err)
             {
                 throw err;
@@ -54,18 +79,14 @@ export default class SuggestCommand implements IBotCommand {
             console.log('Updated!');
         })
         msgObj.delete(0);
-        answer.setTitle("Thank You For Leaving A Suggestion");
-        answer.setColor("#ff0000");
-        answer.addField(msgObj.author.username, "Suggested Dapper Dino to: " + suggestion, false);
-        answer.addField("Your request has been added to Dapper's video ideas list", "Thanks for your contribution", false);
-        answer.setFooter("Sit tight and I might get around to your idea... eventually :D");
 
-        suggestObject.Description = suggestion;
-        suggestObject.DiscordUser = new discordUser();
-        suggestObject.DiscordUser.Username = msgObj.author.username;
-        suggestObject.DiscordUser.DiscordId = msgObj.author.id;
-
-        new apiRequestHandler().RequestAPI('POST', suggestObject, 'https://dapperdinoapi.azurewebsites.net/api/suggestion', config);
-        
+        let suggestionEmbed = new discord.RichEmbed()
+            .setTitle("Thank You For Leaving A Suggestion")
+            .setColor("#ff0000")
+            .addField(msgObj.author.username, "Suggested Dapper Dino to: " + collectedInfo[1], false)
+            .addField("Your request has been added to Dapper's video ideas list", "Thanks for your contribution", false)
+            .setFooter("Sit tight and I might get around to your idea... eventually :D")
+            
+        msgObj.channel.send(suggestionEmbed);
     }
 }
