@@ -24,10 +24,10 @@ export class apiRequestHandler {
         request(options, (error:any, response:any, body:any) => {
             console.log(response.statusCode);
             if (!error && response.statusCode == 200) {
-                console.log("Success"); 
+                return body;
             }
             else if(!error && response.statusCode == 401){
-                this.GenerateNewToken(options, config);
+                return this.GenerateNewToken(options, config);
             }
             else if(!error && response.statusCode == 403){
                 console.log("Unauthorized");
@@ -63,7 +63,7 @@ export class apiRequestHandler {
 
         request(first_options, (error:any, response:any, body:any) =>{
             if (!error && response.statusCode == 200) {
-                console.log("Success"); 
+                return body;
             }
             else if (!error && response.statusCode == 401){
                 console.log("Not authenticated ");

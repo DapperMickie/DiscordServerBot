@@ -1,6 +1,7 @@
+import * as compactDiscordUser from './compactDiscordUser'
+
 export interface discordUser {
-    DiscordId: string;
-    Username: string;
+    CompactDiscordUser: compactDiscordUser.compactDiscordUser;
     Name: string
 }
 

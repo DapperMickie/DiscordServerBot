@@ -35,8 +35,8 @@ export default class SuggestCommand implements IBotCommand {
         let suggestObject:suggest = new suggest();
         suggestObject.Description = data[1];
         suggestObject.DiscordUser = new discordUser();
-        suggestObject.DiscordUser.Username = ticketuser.displayName;
-        suggestObject.DiscordUser.DiscordId = ticketuser.id;   
+        suggestObject.DiscordUser.CompactDiscordUser.Username = ticketuser.displayName;
+        suggestObject.DiscordUser.CompactDiscordUser.DiscordId = ticketuser.id;   
         switch(data[0].toLowerCase()){
             case "bot":
                 suggestObject.Type = SuggestionTypes.Bot;

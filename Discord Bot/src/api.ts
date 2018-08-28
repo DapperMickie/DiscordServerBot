@@ -1,4 +1,5 @@
 import * as discord from 'discord.js'
+import { websiteBotService } from './websiteBotService';
 
 export interface ILoggerMethod {
     (msg: string, ...args: any[]): void
@@ -44,7 +45,7 @@ export interface IBotCommand {
     getHelp(): IBotCommandHelp
     init(bot: IBot, dataPath: string): void
     isValid(msg: string): boolean
-    process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void>
+    process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[], webBotService:websiteBotService): Promise<void>
 }
 
 export interface IUser {

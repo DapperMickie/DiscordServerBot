@@ -34,7 +34,6 @@ export default class TicketCommand implements IBotCommand {
     httpFunc = (response: any, data: any, ticketuser: any, config: any) => {
         let ticketObject: ticket = new ticket();
         ticketObject.Applicant = new applicant()
-
         ticketObject.Subject = data[0];
         ticketObject.Description = data[1];
         ticketObject.Applicant.Username = ticketuser.displayName;
