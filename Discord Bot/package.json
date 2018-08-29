@@ -23,6 +23,7 @@
         "typescript": "^2.6.2"
     },
     "dependencies": {
+        "@aspnet/signalr": "^1.0.3",
         "@types/superagent": "^3.8.3",
         "cheerio": "^1.0.0-rc.2",
         "discord.js": "^11.4.2",
@@ -31,6 +32,8 @@
         "node": "^10.8.0",
         "node-fetch": "^1.7.3",
         "request": "^2.88.0",
-        "superagent": "^3.8.3"
+        "superagent": "^3.8.3",
+        "websocket": "^1.0.26",
+        "xmlhttprequest": "^1.8.0"
     }
 }

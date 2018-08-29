@@ -1,7 +1,6 @@
-import * as compactDiscordUser from './compactDiscordUser'
+import { compactDiscordUser } from "./compactDiscordUser";
 
-export interface discordUser {
-    CompactDiscordUser: compactDiscordUser.compactDiscordUser;
+export interface discordUser extends compactDiscordUser{
     Name: string
 }
 

@@ -1,9 +1,9 @@
-import * as discordUser from './discordUser'
+import { discordUser } from "./discordUser";
 
 export interface suggest {
     Description: string;
     Type: SuggestionTypes;
-    DiscordUser: discordUser.discordUser
+    DiscordUser: discordUser
 }
 
 export enum SuggestionTypes{

@@ -6,12 +6,13 @@ import { suggest, SuggestionTypes } from '../models/suggest';
 import { discordUser } from '../models/discordUser';
 import { apiRequestHandler } from '../apiRequestHandler';
 import { dialogueStep, dialogueHandler } from '../dialogueHandler';
+import { compactDiscordUser } from '../models/compactDiscordUser';
 
 export default class SuggestCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?suggest/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '?suggest', description: '(?suggest [type] [example_suggestion]) Replace [type] with either "Bot", "Website", "General" or "Youtube" depending on what you are leaving a suggesion for. "Bot" is  referring to Dapper Bot. If you are giving a suggestion for Discord Bot tutorials then use "Youtube" for type. ' }
+        return { caption: '?suggest', description: 'Leave a suggestion for our server\'s bot, our website or leave a YouTube video suggestion. Just follow the prompts' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -35,8 +36,8 @@ export default class SuggestCommand implements IBotCommand {
         let suggestObject:suggest = new suggest();
         suggestObject.Description = data[1];
         suggestObject.DiscordUser = new discordUser();
-        suggestObject.DiscordUser.CompactDiscordUser.Username = ticketuser.displayName;
-        suggestObject.DiscordUser.CompactDiscordUser.DiscordId = ticketuser.id;   
+        suggestObject.DiscordUser.Username = ticketuser.displayName;
+        suggestObject.DiscordUser.DiscordId = ticketuser.id;
         switch(data[0].toLowerCase()){
             case "bot":
                 suggestObject.Type = SuggestionTypes.Bot;

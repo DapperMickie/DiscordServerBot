@@ -1,9 +1,9 @@
-import * as applicant from './applicant'
+import { applicant } from "./applicant";
 
 export interface ticket {
     Description: string;
     Subject: string;
-    Applicant: applicant.applicant
+    Applicant: applicant
 }
 
 export class ticket implements ticket {

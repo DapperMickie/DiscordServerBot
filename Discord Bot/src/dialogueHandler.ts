@@ -50,6 +50,7 @@ export class dialogueHandler {
                     //});
                 })
                 .catch(collected => {
+                    console.log(console.error(collected))
                     channel.send(step.errorMessage);
                 });
             beforeM.delete(0);

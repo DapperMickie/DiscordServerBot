@@ -50,7 +50,8 @@ export class Bot implements IBot {
             this._client.user.setStatus('online')
             this._logger.info('started...')
             this._welcomeChannel = this._client.channels.get(this._config.welcomeChannel) as discord.TextChannel;
-            this._websiteBotService = new websiteBotService(this._client);
+            this._websiteBotService = new websiteBotService(this._client, this._config);
+            this._websiteBotService.startupService();
         })
 
         this._client.on('guildMemberAdd', async member => {
