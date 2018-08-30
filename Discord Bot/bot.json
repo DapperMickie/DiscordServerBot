@@ -11,9 +11,11 @@
         "level",
         "mirror",
         "ping",
+        "purge",
         "report",
         "roll",
         "rps",
+        "rtfm",
         "serverinfo",
         "suggest",
         "ticket"

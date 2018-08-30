@@ -5,7 +5,7 @@ import * as fs from 'fs'
 
 const gameScores = require("../../gameScores.json");
 
-export default class HelpCommand implements IBotCommand {
+export default class RPSCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?rps/im
 
     public getHelp(): IBotCommandHelp {

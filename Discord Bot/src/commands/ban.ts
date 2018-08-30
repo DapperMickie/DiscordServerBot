@@ -16,15 +16,15 @@ export default class BanCommand implements IBotCommand {
     }
     
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
+        if(!msgObj.member.hasPermission("MANAGE_MESSAGES"))
+        {
+            msgObj.channel.send("You don't have the privileges to ban other users!"); //Makes sure the user has the correct permissions to be able to ban other users
+            return;
+        }
         let bannedUser = msgObj.guild.member(msgObj.mentions.users.first());
         if(!bannedUser)
         {
             msgObj.channel.send("Sorry, I couldn't find that user");
-            return;
-        }
-        if(!msgObj.member.hasPermission("MANAGE_MESSAGES"))
-        {
-            msgObj.channel.send("You don't have the privileges to ban other users!"); //Makes sure the user has the correct permissions to be able to kick other users
             return;
         }
         let words = msg.split(' ');

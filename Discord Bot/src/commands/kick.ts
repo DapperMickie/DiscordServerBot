@@ -2,7 +2,7 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../
 import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 
-export default class HelpCommand implements IBotCommand {
+export default class KickCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?kick/im
 
     public getHelp(): IBotCommandHelp {
@@ -16,15 +16,15 @@ export default class HelpCommand implements IBotCommand {
     }
     
     public async process(msg: string, answer: IBotMessage, msgObj: discord.Message, client: discord.Client, config: IBotConfig, commands: IBotCommand[]): Promise<void> {
+        if(!msgObj.member.hasPermission("MANAGE_MESSAGES"))
+        {
+            msgObj.channel.send("You don't have the privileges to kick other users!"); //Makes sure the user has the correct permissions to be able to kick other users
+            return;
+        }
         let kickedUser = msgObj.guild.member(msgObj.mentions.users.first());
         if(!kickedUser)
         {
             msgObj.channel.send("Sorry, I couldn't find that user");
-            return;
-        }
-        if(!msgObj.member.hasPermission("MANAGE_MESSAGES"))
-        {
-            msgObj.channel.send("You don't have the privileges to kick other users!"); //Makes sure the user has the correct permissions to be able to kick other users
             return;
         }
         let words = msg.split(' ');

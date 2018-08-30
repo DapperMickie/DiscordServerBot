@@ -2,7 +2,7 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage, IBotConfig } from '../
 import { getRandomInt } from '../utils'
 import * as discord from 'discord.js'
 
-export default class HelpCommand implements IBotCommand {
+export default class CommandsCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\?commands/im
 
     public getHelp(): IBotCommandHelp {
